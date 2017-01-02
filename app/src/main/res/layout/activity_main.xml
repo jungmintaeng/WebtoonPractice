@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.jungmin.realwebtoonprototype.MainActivity">
+
+    <RadioGroup
+        android:orientation="horizontal"
+        android:id="@+id/dayGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_weight="1"
+            android:text="월"
+            android:id="@+id/mon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:layout_weight="1"
+            android:text="화"
+            android:id="@+id/tue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:layout_weight="1"
+            android:text="수"
+            android:id="@+id/wed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:layout_weight="1"
+            android:text="목"
+            android:id="@+id/thu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:layout_weight="1"
+            android:text="금"
+            android:id="@+id/fri"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:layout_weight="1"
+            android:text="토"
+            android:id="@+id/sat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:layout_weight="1"
+            android:text="일"
+            android:id="@+id/sun"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/sortOrder"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_weight="1"
+            android:text="조회순"
+            android:id="@+id/radio_ViewCount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:layout_weight="1"
+            android:text="업데이트순"
+            android:id="@+id/radio_Update"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:layout_weight="1"
+            android:text="별점순"
+            android:id="@+id/radio_StarScore"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:layout_weight="1"
+            android:text="제목순"
+            android:id="@+id/radio_TitleName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </RadioGroup>
+
+    <ListView
+        android:id="@+id/day_webtoonlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
