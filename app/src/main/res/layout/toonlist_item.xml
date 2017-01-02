@@ -2,6 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="42dp">
+
+    <!--ToonListActivity ListView 내에 들어갈 itemLayout
+    단순히 회차 정보와 별점 등을 나타내고 있다.-->
+
     <ImageView
         android:id="@+id/toonlist_thumb"
         android:layout_width="71dp"

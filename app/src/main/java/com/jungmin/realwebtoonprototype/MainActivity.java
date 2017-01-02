@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     String day = "";    //요일
     String order = "ViewCount";  //sorting order
     String url = null;  //요일과 sorting order를 추가한 query가 완성된 url
-    ListView toonListView;
-    Context mContext;
-    MainActivityAdapter mainAdapter;
+    ListView toonListView;//웹툰을 표시할 리스트뷰
+    Context mContext;//어댑터에 넘겨줄 Context
+    MainActivityAdapter mainAdapter;// 리스트뷰에 적용될 Adapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         startActivity(new Intent(this, SplashActivity.class));
@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         RadioButton btn = (RadioButton)findViewById(R.id.radio_ViewCount);
         btn.setChecked(true);
 
-        RadioGroup dayGroup = (RadioGroup)findViewById(R.id.dayGroup);//요일
+        RadioGroup dayGroup = (RadioGroup)findViewById(R.id.dayGroup);
+        //요일을 선택할 수 있는 라디오그룹
         dayGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int id) {
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         RadioGroup sortOrderGroup = (RadioGroup)findViewById(R.id.sortOrder);
+        //정렬 순서를 나타내는 라디오그룹
         sortOrderGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int id) {
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         /*
+        앱을 막 실행했을 때에는 현재 요일에 맞추어 해당 요일의 웹툰을 보여줘야 함
         요일 받아오기 : Calendar 이용
         요일(1~7, 1:일요일): 2
          */
@@ -131,21 +134,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 btn = (RadioButton)findViewById(R.id.sat);
                 break;
         }
-        btn.setChecked(true);
+        btn.setChecked(true);//OnCheckedChange에서 URL Parsing하는 부분 실행하므로 오늘 요일을 체크
     }
 
-    private void initializeURL(){
+    private void initializeURL(){   //사용자가 요일, 정렬 순서를 선택함에 따라 바뀐 url을 반영하는 메소드
         url = "http://comic.naver.com/webtoon/weekdayList.nhn?week=" + day + "&order=" + order + "&view=image";
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        /*
+         * 웹툰 하나를 클릭했을 때, 회차 정보 Activity로 넘어갈 수 있도록 하는 코드가 들어가야 함
+         */
         Toon itemClicked = (Toon)mainAdapter.getItem(position);
         Intent toListIntent = new Intent(this, ToonListActivity.class);
         toListIntent.putExtra("title", itemClicked.getTitle());//웹툰 제목
         toListIntent.putExtra("url", itemClicked.getListURL());//만화 리스트 url
         startActivity(toListIntent);
-        //Toast.makeText(this, "제목 : " + itemClicked.getTitle() + "\nurl : " + itemClicked.getListURL(), Toast.LENGTH_LONG).show();
     }
 
     private class GetToons extends AsyncTask<String, String, Boolean> {
@@ -193,8 +198,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Toast.makeText(MainActivity.this, "Load Complete", Toast.LENGTH_SHORT).show();
                 mainAdapter.setToons(toonList);
                 toonListView.setAdapter(mainAdapter);
+                //모든 정보들을 받아왔을 때 리스트뷰의 어댑터를 바꾸어준다.
             } else {
                 Toast.makeText(MainActivity.this, "3G/LTE/WiFi 연결 상태를 확인하세요", Toast.LENGTH_SHORT).show();
+                //URL 로드에 실패한 경우. 인터넷 연결이 안되었을 확률이 높다
             }
         }
     }

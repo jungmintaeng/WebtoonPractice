@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,12 +30,13 @@ import java.util.ArrayList;
 /**
  * Created by 신정민 on 2017-01-01.
  */
-public class ToonListActivity extends AppCompatActivity {
+public class ToonListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private ProgressBar loadingProgress;
     private ArrayList<ToonList> toonLists;
     private ListView toonListView;
     private ToonListAdapter toonListAdapter;
     private Context mContext;
+    private GetToons toons = new GetToons();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,13 +56,29 @@ public class ToonListActivity extends AppCompatActivity {
         //findView
         TextView titleTextView = (TextView) findViewById(R.id.toonlist_ToonNameTextView);
         toonListView = (ListView) findViewById(R.id.toonlist_ListView);
+        toonListView.setOnItemClickListener(this);
         loadingProgress = (ProgressBar) findViewById(R.id.loadingProgress);
 
         //제목 설정
         titleTextView.setText(title);
-
-        GetToons toons = new GetToons();
         toons.execute(url);
+        //toons.execute("http://m.comic.naver.com/webtoon/list.nhn?titleId=25455&week=tue");
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        ToonList toonList = (ToonList)toonListAdapter.getItem(position);
+        Intent gotoViewerIntent = new Intent(this, ToonViewerActivity.class);
+        gotoViewerIntent.putExtra("viewerURL", toonList.getViewerURL());
+        startActivity(gotoViewerIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        try{
+            toons.cancel(true);
+        }catch (Exception e){}
+        super.onDestroy();
     }
 
     private class GetToons extends AsyncTask<String, String, Boolean> {
@@ -82,8 +100,8 @@ public class ToonListActivity extends AppCompatActivity {
                 Log.i("jungmin", "the last toonnumber : " + lastToonNumber);
 
                 for (int i = 1; i <= lastToonNumber / 10 + 1; i++) {
-                    doc = Jsoup.connect(urls[0] + "&page=" + i + "#").get();    //인자로 들어온 url document에 담음
-                    Log.i("jungmin", urls[0] + "&page=" + i + "#");
+                    doc = Jsoup.connect(urls[0] + "&amp;page=" + i + "#").get();    //인자로 들어온 url document에 담음
+                    Log.i("jungmin", urls[0] + "&amp;page=" + i + "#");
 /*
                     인터넷 소스 받아서 파일로 내보내 저장하는 코드
                     String content = "";
@@ -96,16 +114,17 @@ public class ToonListActivity extends AppCompatActivity {
 
                     FileOutputStream fos = mContext.openFileOutput("asd" + i + ".txt", Context.MODE_PRIVATE);
                     fos.write(content.getBytes());
-                    fos.close();
-                    toons = doc.select(".lst");//각 웹툰은 lst라는 클래스 안에 담겨 있고, 하나의 lst Element 내에서 각 웹툰의 정보를 얻어올 것이다.*/
+                    fos.close();*/
+                    //각 웹툰은 lst라는 클래스 안에 담겨 있고, 하나의 lst Element 내에서 각 웹툰의 정보를 얻어올 것이다.
                     for (Element toon : toons) {
                         String title = toon.select(".toon_name").first().text();
                         String thumbURL = toon.select(".im_inbr > img").first().attr("src");
                         String star = toon.select(".if1.st_r").first().text();
                         String updateDate = toon.select(".if1").last().text();
+                        String viewerURL = "http://comic.naver.com" + toon.select("a").first().attr("href");
                         //생성자 String subTitle,Bitmap thumbnail, double star, String updateDate
                         try {
-                            toonLists.add(new ToonList(title, BitmapFactory.decodeStream(new URL(thumbURL).openConnection().getInputStream()), Double.parseDouble(star), updateDate));
+                            toonLists.add(new ToonList(title, viewerURL, BitmapFactory.decodeStream(new URL(thumbURL).openConnection().getInputStream()), Double.parseDouble(star), updateDate));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

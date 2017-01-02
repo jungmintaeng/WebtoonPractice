@@ -2,6 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <!--맨 처음 앱이 실행될 때, 웹툰의 목록을 불러올 때까지 시간을
+    버는 로딩화면(Splash Activity)-->
+
     <ImageView
         android:scaleType="fitXY"
         android:src="@drawable/splash"

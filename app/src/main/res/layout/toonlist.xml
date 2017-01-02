@@ -2,6 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <!--메인 액티비티에서 하나의 아이템을 눌렀을 때,
+    1화 2화....이런 식으로 쭉 회차 정보를 나타낼 수 있는 레이아웃
+    (아직 미완성) &ndash;&gt; 잘 동작하지 않는다...-->
+
     <TextView
         android:text="TEST"
         android:textSize="30dp"

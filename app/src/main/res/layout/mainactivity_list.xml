@@ -2,6 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <!--메인액티비티 리스트 뷰에 들어가는 아이템
+    하나의 레이아웃이 하나의 웹툰에 대한 정보를 나타낸다.-->
+
     <ImageView
         android:layout_marginRight="10dp"
         android:id="@+id/list_thumb"
