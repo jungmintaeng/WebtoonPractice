@@ -42,6 +42,7 @@ public class ToonViewerActivity extends AppCompatActivity {
 
         LoadImage loadImage = new LoadImage();
         loadImage.execute(url);
+        Toast.makeText(this, url, Toast.LENGTH_LONG).show();
     }
 
     private class LoadImage extends AsyncTask<String, Bitmap, Boolean> {

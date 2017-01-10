@@ -7,6 +7,7 @@
     하나의 레이아웃이 하나의 웹툰에 대한 정보를 나타낸다.-->
 
     <ImageView
+        android:scaleType="fitXY"
         android:layout_marginRight="10dp"
         android:id="@+id/list_thumb"
         android:layout_width="63dp"

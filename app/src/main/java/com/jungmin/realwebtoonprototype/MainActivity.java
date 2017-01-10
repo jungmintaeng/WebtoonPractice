@@ -20,6 +20,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent toListIntent = new Intent(this, ToonListActivity.class);
         toListIntent.putExtra("title", itemClicked.getTitle());//웹툰 제목
         toListIntent.putExtra("url", itemClicked.getListURL());//만화 리스트 url
+        toListIntent.putExtra("smartToon", itemClicked.isSmartToon());
         startActivity(toListIntent);
     }
 
@@ -180,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         else
                             smartToon = false;
                     }catch (Exception e){smartToon = false;}
-                    //생성자 : String title, Bitmap thumbnail, String star, String lastUpdateDate, String author, String listURL, boolean smartToon
+                    //생성자 : String title, String thumbnail, String star, String lastUpdateDate, String author, String listURL, boolean smartToon
                     toonList.add(new Toon(title, thumbURL, Double.parseDouble(star), lastUpdateDate, author, listURL, smartToon));
                 }
             } catch (Exception e) {

@@ -10,7 +10,7 @@ import java.net.URL;
  */
 public class Toon {
     private String title;   //제목
-    private Bitmap thumbnail;   //썸네일 비트맵
+    private String thumbnail;   //썸네일 비트맵
     private double star;    //평점
     private String lastUpdateDate;  //최근 업데이트 날짜
     private String author;  //작가
@@ -22,7 +22,8 @@ public class Toon {
      */
     public Toon(String title, final String thumbnailURL, double star, String lastUpdateDate, String author, String listURL, boolean smartToon) {
         this.title = title;
-        new Thread() {
+        this.thumbnail = thumbnailURL;
+/*        new Thread() {
             public void run() {
                 try {
                     thumbnail = BitmapFactory.decodeStream(new URL(thumbnailURL).openConnection().getInputStream());
@@ -30,7 +31,7 @@ public class Toon {
                     e.printStackTrace();
                 }
             }
-        }.start();
+        }.start();*/
 
         this.star = star;
         this.lastUpdateDate = lastUpdateDate;
@@ -46,7 +47,7 @@ public class Toon {
         return title;
     }
 
-    public Bitmap getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 

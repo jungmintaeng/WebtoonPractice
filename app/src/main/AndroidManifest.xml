@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".ToonListActivity"/>
         <activity android:name=".ToonViewerActivity"/>
+        <activity android:name=".CutToonViewerActivity"/>
     </application>
 
 </manifest>

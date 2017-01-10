@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 
@@ -64,7 +66,13 @@ public class MainActivityAdapter extends BaseAdapter {
         }
         try{
             Toon toon = toons.get(position);
-            holder.image.setImageBitmap(toon.getThumbnail());
+            //holder.image.setImageBitmap(toon.getThumbnail());
+            Glide.with(mContext)
+                    .load(toon.getThumbnail())
+                    .placeholder(R.drawable.thumbholder)
+                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .into(holder.image);
             holder.title.setText(toon.getTitle());
             holder.author.setText(toon.getAuthor());
             holder.star.setText(String.valueOf(toon.getStar()));
